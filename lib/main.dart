@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'HomeList/HomeList.dart';
+import 'Data/ViewData.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,15 +15,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(title: 'Home Finance'),
+      home: MyHomePage(title: 'Home Finance'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  MyHomePage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -52,35 +52,33 @@ class _MyHomePageState extends State<MyHomePage> {
     var text = Text(
       getWidget,
     );
+
+    var views = List.from({
+      ViewData("Rachunki", "Wszystkie wprowadzone rachunki do aplikacji")
+          .getWidget(),
+      ViewData("Podsumowanie", "Podsumowania finansów w zadanym okresie")
+          .getWidget(),
+      ViewData("Kalendarz", "Kalendarz wydatków").getWidget(),
+      ViewData("Ustawienia", "Ustawienia słowników").getWidget()
+    });
+
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[text, new Text("cos")],
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: SingleChildScrollView(
+          child: Center(
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [for (Container viewData in views) viewData],
+            ),
+          ),
+        ) // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 
   String get getWidget => 'Hello World!';
