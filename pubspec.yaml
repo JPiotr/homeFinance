@@ -45,6 +45,7 @@ dependencies:
   flutter_bloc: ^8.1.2
   sqflite: ^2.2.8+3
   path: ^1.8.2
+  grouped_list: ^5.1.2
 
 dev_dependencies:
   flutter_test:

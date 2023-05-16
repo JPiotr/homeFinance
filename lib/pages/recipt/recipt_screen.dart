@@ -43,7 +43,7 @@ class ReciptScreenState extends State<ReciptScreen> {
           ReciptState currentState,
         ) {
           if (currentState is UnReciptState) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -72,27 +72,13 @@ class ReciptScreenState extends State<ReciptScreen> {
               ReciptModel(1, "test", 22.0, DateTime.now())
             });
             var elements = list.map((e) => ReciptElement(e));
-            return Center(
+            return SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  for (var el in elements) el.getWidget(),
-                  const Text('Flutter files: done'),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                      ),
-                      child: Text('throw error'),
-                      onPressed: () => _load(true),
-                    ),
-                  ),
-                ],
-              ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [for (var obj in elements) obj.getWidget()]),
             );
           }
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         });
