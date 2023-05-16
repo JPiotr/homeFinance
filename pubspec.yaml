@@ -31,7 +31,8 @@ dependencies:
   banner_listtile: ^2.3.0
   flutter:
     sdk: flutter
-
+  # sqflite:
+  # path: 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -40,6 +41,10 @@ dependencies:
   firebase_auth: ^4.6.0
   firebase_database: ^10.2.0
   rounded_expansion_tile: ^0.0.13
+  equatable: ^2.0.5
+  flutter_bloc: ^8.1.2
+  sqflite: ^2.2.8+3
+  path: ^1.8.2
 
 dev_dependencies:
   flutter_test:
