@@ -1,80 +1,73 @@
-import 'package:equatable/equatable.dart';
+import 'package:finance_app/pages/recipt/recipt.dart';
+import 'package:finance_app/pages/recipt/recipt_page.dart';
+import 'package:flutter/material.dart';
 
-abstract class ReciptState extends Equatable {
-  ReciptState(this.version);
+final List<Recipt> recipts = List.of({
+  Recipt(0,"Test",0.0,DateTime.now()),
+  Recipt(0,"Test2",0.0,DateTime.now())
+  });
 
-  /// notify change state without deep clone state
-  final int version;
+class ReciptState extends State<ReciptPage> {
+  late String title;
 
-  /// Copy object for use in action
-  /// if need use deep clone
-  ReciptState getStateCopy();
 
-  ReciptState getNewVersion();
-
-  @override
-  List<Object> get props => [version];
-}
-
-/// UnInitialized
-class UnReciptState extends ReciptState {
-  UnReciptState(int version) : super(version);
+  ReciptState(this.title);
 
   @override
-  String toString() => 'UnReciptState';
+  Widget build(BuildContext context) {
+    // final categoryWidgets = recipts.map((e) => CategoryWidget(e));
 
-  @override
-  UnReciptState getStateCopy() {
-    return UnReciptState(0);
+    return Scaffold(
+      persistentFooterAlignment: AlignmentDirectional.bottomCenter,
+        persistentFooterButtons: [
+          ElevatedButton(
+            onPressed: () {
+              print("button clicked");
+              recipts.add(Recipt(0, "test", 0, DateTime.now()));
+              // Navigator.pushNamed(context, '/recipts/new');
+            },
+            child: Icon(Icons.add, color: Colors.white),
+            style: ElevatedButton.styleFrom(
+              shape: CircleBorder(),
+              padding: EdgeInsets.all(20),
+              backgroundColor: Colors.blue, // <-- Button color
+              foregroundColor: Colors.red, // <-- Splash color
+            ),
+          )
+        ],
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        body: ListView.builder(itemBuilder: (context, index) {
+          return ListTile(title: Card(
+            borderOnForeground: true,
+            // margin: const EdgeInsets.all(5),
+            shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: Container(
+              height: 50,
+              child: Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                Text(recipts.elementAt(index).name, style: TextStyle(fontSize: 19)),
+                Text("${recipts.elementAt(index).dateTime.day}."
+                  "${recipts.elementAt(index).dateTime.month}."
+                  "${recipts.elementAt(index).dateTime.year}", style: TextStyle(fontSize: 19))]),
+            ),
+          ));
+        },itemCount: recipts.length));
   }
 
-  @override
-  UnReciptState getNewVersion() {
-    return UnReciptState(version + 1);
-  }
-}
-
-/// Initialized
-class InReciptState extends ReciptState {
-  InReciptState(int version) : super(version);
-
-  // final String hello;
-
-  @override
-  String toString() => 'InReciptState';
-
-  @override
-  InReciptState getStateCopy() {
-    return InReciptState(version);
-  }
-
-  @override
-  InReciptState getNewVersion() {
-    return InReciptState(version + 1);
-  }
-
-  @override
-  List<Object> get props => [version];
-}
-
-class ErrorReciptState extends ReciptState {
-  ErrorReciptState(int version, this.errorMessage) : super(version);
-
-  final String errorMessage;
-
-  @override
-  String toString() => 'ErrorReciptState';
-
-  @override
-  ErrorReciptState getStateCopy() {
-    return ErrorReciptState(version, errorMessage);
-  }
-
-  @override
-  ErrorReciptState getNewVersion() {
-    return ErrorReciptState(version + 1, errorMessage);
-  }
-
-  @override
-  List<Object> get props => [version, errorMessage];
+  // SingleChildScrollView buildSingleChildScrollView() {
+  //   return SingleChildScrollView(
+  //       child: Center(
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: [
+  //             for (var widget in categoryWidgets) widget.getWidget(context)
+  //           ],
+  //         ),
+  //       ),
+  //     );
+  // }
 }
