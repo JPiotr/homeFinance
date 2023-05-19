@@ -23,38 +23,43 @@ class ReciptState extends State<ReciptPage> {
           ElevatedButton(
             onPressed: () {
               print("button clicked");
-              recipts.add(Recipt(0, "test", 0, DateTime.now()));
-              // Navigator.pushNamed(context, '/recipts/new');
+              Navigator.pushNamed(context, '/recipt/new');
             },
-            child: Icon(Icons.add, color: Colors.white),
             style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              padding: EdgeInsets.all(20),
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(20),
               backgroundColor: Colors.blue, // <-- Button color
               foregroundColor: Colors.red, // <-- Splash color
             ),
+            child: const Icon(Icons.add, color: Colors.white),
           )
         ],
         appBar: AppBar(
           title: Text(title),
         ),
         body: ListView.builder(itemBuilder: (context, index) {
-          return ListTile(title: Card(
-            borderOnForeground: true,
-            // margin: const EdgeInsets.all(5),
-            shape:
+          return ListTile(title:
+          GestureDetector(
+            onTap: ()=>{
+
+            },
+            child:
+            Card(
+              borderOnForeground: true,
+              // margin: const EdgeInsets.all(5),
+              shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            child: Container(
-              height: 50,
-              child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                Text(recipts.elementAt(index).name, style: TextStyle(fontSize: 19)),
-                Text("${recipts.elementAt(index).dateTime.day}."
-                  "${recipts.elementAt(index).dateTime.month}."
-                  "${recipts.elementAt(index).dateTime.year}", style: TextStyle(fontSize: 19))]),
-            ),
-          ));
+              child: SizedBox(
+                height: 50,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(recipts.elementAt(index).name, style: const TextStyle(fontSize: 19)),
+                      Text("${recipts.elementAt(index).dateTime.day}."
+                          "${recipts.elementAt(index).dateTime.month}."
+                          "${recipts.elementAt(index).dateTime.year}", style: const TextStyle(fontSize: 19))]),
+              ),
+            ),));
         },itemCount: recipts.length));
   }
 
